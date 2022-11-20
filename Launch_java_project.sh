@@ -113,6 +113,7 @@ function pre_deploy_app(){
     if [ "$frame"x =  "SSM"x ] ;then
         if [ ! -f "./docker/application.properties" ];then
             echo -e "${Red}您没有上传application.properties，请在$(pwd)/docker/目录下上传${Font}"
+            exit 1
         fi
     fi
 }
