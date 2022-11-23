@@ -130,6 +130,7 @@ function build_docker(){
 FROM java:8
 USER root
 WORKDIR /app
+COPY ./ /app/
 EOF
     fi
     echo -e "${Red}即将为您创建容器容器名为：${docker_image}${Font}"
