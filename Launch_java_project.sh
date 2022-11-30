@@ -31,7 +31,7 @@ inspect_script=1
 ####################################################参数修改结束########################################################################
 
 #本地脚本版本号
-shell_version=v1.0.1
+shell_version=v1.0.2
 #版本号
 tag=$1
 #脚本执行目录
@@ -92,15 +92,17 @@ function is_inspect_script(){
         remote_version=$(wget -qO- -t1 -T2 "https://api.github.com/repos/${git_project_name}/releases/latest" |  jq -r '.tag_name')
     fi
 
-    if [ ! ${remote_version}=${shell_version} ];then
+    if [ ! "${remote_version}"x = "${shell_version}"x ];then
         if [ $inspect_script == 1 ];then
-            wget -qO- -t1 -T2 "https://gitee.com/${git_project_name}/releases/download/${remote_version}/$0"
+            wget -N "https://gitee.com/${git_project_name}/releases/download/${remote_version}/$0"
         elif [ $inspect_script == 2 ];then
-            wget -qO- -t1 -T2 "https://github.com/${git_project_name}/releases/download/${remote_version}/$0"
+            wget -N "https://github.com/${git_project_name}/releases/download/${remote_version}/$0"
         fi
     else
         echo -e "${Green}您现在的版本是最新版${Font}"
     fi
+    echo -e "${Green}您已更新最新版本，请重新执行${Font}"
+    exit 1
 }
 
 #打印当前参数
